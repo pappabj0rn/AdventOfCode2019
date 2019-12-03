@@ -6,6 +6,7 @@ namespace Aoc2019
     internal class Program
     {
         private static string Prg1202 = "1202 program";
+        private static int Day2_2_MagicNumber = 19690720;
 
         private static void Main()
         {
@@ -23,9 +24,13 @@ namespace Aoc2019
             var reqFuelFuel = (int) data[ModuleFuelCalculator.DataSumKey]
                               +(int) data[ModuleFuelFuelCalculator.DataSumKey];
             Console.WriteLine($"Inluding req. fuel: {reqFuelFuel}");
-            Console.WriteLine("\n");
+            Console.WriteLine();
 
             Console.WriteLine($"1202 Program[0]: {((int[])data[Prg1202])[0]}");
+            var noun = (int) data[Prg1202NounVerbFinder.FoundNounKey];
+            var verb = (int) data[Prg1202NounVerbFinder.FoundVerbKey];
+            var result = 100 * noun + verb;
+            Console.WriteLine($"> nv({Day2_2_MagicNumber}): {result}");
             Console.WriteLine("\n");
         }
 
@@ -35,6 +40,7 @@ namespace Aoc2019
             {
                 new ModuleFuelCalculator(),
                 new ModuleFuelFuelCalculator(),
+                new Prg1202NounVerbFinder(Prg1202,Day2_2_MagicNumber,new IntcodeParser(Prg1202NounVerbFinder.ProgramKey)),
                 new IntcodeParser(Prg1202)
             };
         }
