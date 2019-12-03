@@ -1,27 +1,24 @@
-﻿using System.Collections.Generic;
-using Xunit;
+﻿using Xunit;
 
-namespace AOC2019.Tests
+namespace Aoc2019.Tests
 {
-    public abstract class ModuleFuelCalculatorTests
+    public abstract class ModuleFuelCalculatorTests : CommandTestBase
     {
         public class Execute : ModuleFuelCalculatorTests
         {
-            private readonly Dictionary<string, object> _data;
-
             public Execute()
             {
-                _data = new Dictionary<string, object>();
+                Cmd = new ModuleFuelCalculator();
             }
 
             [Fact]
-            public void Should_add_entry_for_module_fuel_weight_into_data_dictionary()
+            public void Should_add_entries_for_module_fuel_weight_into_data_dictionary()
             {
-                _data.Add(Global.ModuleWeightKey, new[] { 0 });
-                var cmd = new ModuleFuelCalculator();
-                cmd.Execute(_data);
+                Data.Add(Global.ModuleWeightKey, new[] { 0 });
+                Cmd.Execute(Data);
 
-                Assert.Contains(ModuleFuelCalculator.DataKey, _data.Keys);
+                Assert.Contains(ModuleFuelCalculator.DataKey, Data.Keys);
+                Assert.Contains(ModuleFuelCalculator.DataSumKey, Data.Keys);
             }
 
             [Theory]
@@ -31,26 +28,24 @@ namespace AOC2019.Tests
             [InlineData(100756,33583)]
             public void Should_calculate_module_fuel_according_to_example(int input, int output)
             {
-                _data.Add(Global.ModuleWeightKey, new[]{input});
-                var cmd = new ModuleFuelCalculator();
-                cmd.Execute(_data);
+                Data.Add(Global.ModuleWeightKey, new[]{input});
+                Cmd.Execute(Data);
 
                 Assert.Equal(output, ModuleFuelData[0]);
             }
 
-            public int[] ModuleFuelData => (int[])_data[ModuleFuelCalculator.DataKey];
+            public int[] ModuleFuelData => (int[])Data[ModuleFuelCalculator.DataKey];
 
             [Fact]
             public void Should_sum_module_fuel_and_add_into_data_dictionary()
             {
-                _data.Add(Global.ModuleWeightKey, new[] { 12,12 });
-                var cmd = new ModuleFuelCalculator();
-                cmd.Execute(_data);
+                Data.Add(Global.ModuleWeightKey, new[] { 12,12 });
+                Cmd.Execute(Data);
 
                 Assert.Equal(2+2, ModuleFuelSum);
             }
 
-            public int ModuleFuelSum => (int)_data[ModuleFuelCalculator.DataSumKey];
+            public int ModuleFuelSum => (int)Data[ModuleFuelCalculator.DataSumKey];
         }
     }
 }

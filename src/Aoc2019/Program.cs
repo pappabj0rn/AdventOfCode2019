@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AOC2019
+namespace Aoc2019
 {
     internal class Program
     {
@@ -17,6 +17,10 @@ namespace AOC2019
             }
 
             Console.WriteLine($"Module fuel sum: {(int)data[ModuleFuelCalculator.DataSumKey]}");
+
+            var reqFuelFuel = (int) data[ModuleFuelCalculator.DataSumKey]
+                              +(int) data[ModuleFuelFuelCalculator.DataSumKey];
+            Console.WriteLine($"Inluding req. fuel: {reqFuelFuel}");
             Console.WriteLine("\n");
         }
 
@@ -24,7 +28,8 @@ namespace AOC2019
         {
             return new List<Command>
             {
-                new ModuleFuelCalculator()
+                new ModuleFuelCalculator(),
+                new ModuleFuelFuelCalculator()
             };
         }
 
