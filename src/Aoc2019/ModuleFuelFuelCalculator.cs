@@ -18,7 +18,7 @@ namespace Aoc2019
                 var  reqFuel = fuelWeight;
                 while (reqFuel > 0)
                 {
-                     reqFuel = Math.Max(0, (int)(reqFuel / 3m - 2));
+                     reqFuel = Math.Max(0, MassFuelCalculator.Calculate(reqFuel));
                      moduleSum += reqFuel;
                 }
 

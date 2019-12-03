@@ -13,7 +13,7 @@ namespace Aoc2019
             var sum = 0;
             foreach (int moduleWeight in (IEnumerable<int>) data[Global.ModuleWeightKey])
             {
-                var fuel = (int) (moduleWeight / 3m - 2);
+                var fuel = MassFuelCalculator.Calculate(moduleWeight);
                 list.Add(fuel);
                 sum += fuel;
             }
