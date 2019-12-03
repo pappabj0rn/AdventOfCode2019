@@ -14,22 +14,20 @@ namespace Aoc2019
             var sum = 0;
             foreach (int fuelWeight in (IEnumerable<int>)data[ModuleFuelCalculator.DataKey])
             {
-                var fuel = CalculateRequiredFuel(fuelWeight);
-                list.Add(fuel);
-                sum += fuel;
+                var moduleSum = 0;
+                var  reqFuel = fuelWeight;
+                while (reqFuel > 0)
+                {
+                     reqFuel = Math.Max(0, (int)(reqFuel / 3m - 2));
+                     moduleSum += reqFuel;
+                }
+
+                list.Add(moduleSum);
+                sum += moduleSum;
             }
 
             data.Add(DataKey, list.ToArray());
             data.Add(DataSumKey, sum);
-        }
-
-        private int CalculateRequiredFuel(int fuelWeight)
-        {
-            if (fuelWeight < 1)
-                return 0;
-
-            var fuel = (int) (fuelWeight / 3m - 2);
-            return Math.Max(0, fuel + CalculateRequiredFuel(fuel));
         }
     }
 }
