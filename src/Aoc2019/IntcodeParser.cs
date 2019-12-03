@@ -13,7 +13,7 @@ namespace Aoc2019
 
         public override void Execute(Dictionary<string, object> data)
         {
-            var opCodes = new Dictionary<int, Operation>
+            var opCodes = new Dictionary<int, Instruction>
             {
                 {1, new Add()},
                 {2, new Mul()},
@@ -39,7 +39,7 @@ namespace Aoc2019
             public int[] Memory { get; set; }
         }
 
-        public abstract class Operation
+        public abstract class Instruction
         {
             public virtual int Length { get; } = 0;
 
@@ -52,7 +52,7 @@ namespace Aoc2019
             protected abstract void ExecuteInternal(ProgramState state);
         }
 
-        private class End : Operation
+        private class End : Instruction
         {
             protected override void ExecuteInternal(ProgramState state)
             {
@@ -60,37 +60,37 @@ namespace Aoc2019
             }
         }
 
-        private class Add : Operation
+        private class Add : Instruction
         {
             public override int Length => 4;
 
             protected override void ExecuteInternal(ProgramState state)
             {
                 var i = state.ProgramCounter;
-                var param1 = state.Memory[i + 1];
-                var param2 = state.Memory[i + 2];
-                var storage = state.Memory[i + 3];
+                var p1Addr = state.Memory[i + 1];
+                var p2Addr = state.Memory[i + 2];
+                var storageAddr = state.Memory[i + 3];
 
-                state.Memory[storage] = 
-                    state.Memory[param1] 
-                    + state.Memory[param2];
+                state.Memory[storageAddr] = 
+                    state.Memory[p1Addr] 
+                    + state.Memory[p2Addr];
             }
         }
 
-        private class Mul : Operation
+        private class Mul : Instruction
         {
             public override int Length => 4;
 
             protected override void ExecuteInternal(ProgramState state)
             {
                 var i = state.ProgramCounter;
-                var param1 = state.Memory[i + 1];
-                var param2 = state.Memory[i + 2];
-                var storage = state.Memory[i + 3];
+                var p1Addr = state.Memory[i + 1];
+                var p2Addr = state.Memory[i + 2];
+                var storageAddr = state.Memory[i + 3];
 
-                state.Memory[storage] =
-                    state.Memory[param1]
-                    * state.Memory[param2];
+                state.Memory[storageAddr] =
+                    state.Memory[p1Addr]
+                    * state.Memory[p2Addr];
             }
         }
     }
