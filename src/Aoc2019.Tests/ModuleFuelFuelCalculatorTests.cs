@@ -4,12 +4,13 @@ namespace Aoc2019.Tests
 {
     public abstract class ModuleFuelFuelCalculatorTests : CommandTestBase
     {
+        protected ModuleFuelFuelCalculatorTests()
+        {
+            Cmd = new ModuleFuelFuelCalculator();
+        }
+
         public class Execute : ModuleFuelFuelCalculatorTests
         {
-            public Execute()
-            {
-                Cmd = new ModuleFuelFuelCalculator();
-            }
 
             [Fact]
             public void Should_add_entries_for_module_fuels_fuel_weight_into_data_dictionary()
