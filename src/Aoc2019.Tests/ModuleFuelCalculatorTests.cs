@@ -4,9 +4,11 @@ namespace Aoc2019.Tests
 {
     public abstract class ModuleFuelCalculatorTests : CommandTestBase
     {
+        public static string ModuleWeightKey = "mwk";
+
         protected ModuleFuelCalculatorTests()
         {
-            Cmd = new ModuleFuelCalculator();
+            Cmd = new ModuleFuelCalculator(ModuleWeightKey);
         }
 
         public class Execute : ModuleFuelCalculatorTests
@@ -14,7 +16,7 @@ namespace Aoc2019.Tests
             [Fact]
             public void Should_add_entries_for_module_fuel_weight_into_data_dictionary()
             {
-                Data.Add(Global.ModuleWeightKey, new[] { 0 });
+                Data.Add(ModuleWeightKey, new[] { 0 });
                 Cmd.Execute(Data);
 
                 Assert.Contains(ModuleFuelCalculator.DataKey, Data.Keys);
@@ -28,7 +30,7 @@ namespace Aoc2019.Tests
             [InlineData(100756,33583)]
             public void Should_calculate_module_fuel_according_to_example(int input, int output)
             {
-                Data.Add(Global.ModuleWeightKey, new[]{input});
+                Data.Add(ModuleWeightKey, new[]{input});
                 Cmd.Execute(Data);
 
                 Assert.Equal(output, ModuleFuelData[0]);
@@ -39,7 +41,7 @@ namespace Aoc2019.Tests
             [Fact]
             public void Should_sum_module_fuel_and_add_into_data_dictionary()
             {
-                Data.Add(Global.ModuleWeightKey, new[] { 12,12 });
+                Data.Add(ModuleWeightKey, new[] { 12,12 });
                 Cmd.Execute(Data);
 
                 Assert.Equal(2+2, ModuleFuelSum);

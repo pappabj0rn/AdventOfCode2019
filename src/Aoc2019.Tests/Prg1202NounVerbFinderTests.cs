@@ -22,13 +22,13 @@ namespace Aoc2019.Tests
         public class Execute : Prg1202NounVerbFinderTests
         {
             [Fact]
-            public void Should_modify_given_programs_noun_and_verb_from_0_to_99()
+            public void Should_modify_given_programs_noun_and_verb_from_0_to_MagicNoun_and_MagicVerb()
             {
                 Cmd.Execute(Data);
 
-                for (int noun = 0; noun < 100; noun++)
+                for (int noun = 0; noun < TestCommand.MagicNoun; noun++)
                 {
-                    for (int verb = 0; verb < 100; verb++)
+                    for (int verb = 0; verb < TestCommand.MagicVerb; verb++)
                     {
                         try
                         {
