@@ -37,7 +37,9 @@ namespace Aoc2019
             Console.WriteLine();
 
             Console.WriteLine("Manhattan distance from central port to closest intersection: " +
-                              $"{(int)data[ManhattanWireCrossFinder.ClosesManhattanIntersectionKey]}");
+                              $"{(int)data[WireIntersectionFinder.ClosesManhattanIntersectionKey]}");
+            Console.WriteLine("Shourtest route from central port to an intersection: " +
+                              $"{(int)data[WireIntersectionFinder.ShortestRouteDistanceIntersectionKey]}");
 
             Console.WriteLine("\n");
         }
@@ -50,7 +52,7 @@ namespace Aoc2019
                 new ModuleFuelFuelCalculator(),
                 new Prg1202NounVerbFinder(Prg1202Key,Day2_2_MagicNumber,new IntcodeParser(Prg1202NounVerbFinder.ProgramKey)),
                 new IntcodeParser(Prg1202Key),
-                new ManhattanWireCrossFinder(CrossedWireDataKey)
+                new WireIntersectionFinder(CrossedWireDataKey)
             };
         }
 

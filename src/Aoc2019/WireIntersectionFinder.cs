@@ -5,19 +5,21 @@ using System.Linq;
 
 namespace Aoc2019
 {
-    public class ManhattanWireCrossFinder : Command
+    public class WireIntersectionFinder : Command
     {
         public static string ClosesManhattanIntersectionKey = "ManhattanWireCrossFinder_closestIntersection";
+        public static string ShortestRouteDistanceIntersectionKey = "ManhattanWireCrossFinder_shortestDistance";
         private readonly string _wireDataKey;
 
-        public ManhattanWireCrossFinder(string wireDataKey)
+        public WireIntersectionFinder(string wireDataKey)
         {
             _wireDataKey = wireDataKey;
         }
 
         public override void Execute(Dictionary<string, object> data)
         {
-            var closestIntersection = int.MaxValue;
+            var closestManhattanIntersection = int.MaxValue;
+            var shortestRouteIntersection = int.MaxValue;
 
             var rawWireData = (string[]) data[_wireDataKey];
             var wireData = new List<WireData>();
@@ -35,12 +37,16 @@ namespace Aoc2019
 
             foreach (var intersection in intersections)
             {
-                var distance = Math.Abs(intersection.X) + Math.Abs(intersection.Y);
-                if (distance < closestIntersection)
-                    closestIntersection = distance;
+                var dManhattan = Math.Abs(intersection.X) + Math.Abs(intersection.Y);
+                closestManhattanIntersection = Math.Min(dManhattan, closestManhattanIntersection);
+
+                var dRoute = wireData[0].DistanceFromOrigin(intersection)
+                             + wireData[1].DistanceFromOrigin(intersection);
+                shortestRouteIntersection = Math.Min(dRoute, shortestRouteIntersection);
             }
 
-            data.Add(ClosesManhattanIntersectionKey,closestIntersection);
+            data.Add(ClosesManhattanIntersectionKey,closestManhattanIntersection);
+            data.Add(ShortestRouteDistanceIntersectionKey, shortestRouteIntersection);
         }
 
         
@@ -83,6 +89,20 @@ namespace Aoc2019
                     }
                 }
             }
+        }
+
+        public int DistanceFromOrigin(Coordinate c)
+        {
+            var distance = 0;
+
+            foreach (var cInt in Coordinates)
+            {
+                if(c == cInt)
+                    break;
+                distance++;
+            }
+
+            return distance;
         }
     }
 
