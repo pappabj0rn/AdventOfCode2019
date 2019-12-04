@@ -10,7 +10,7 @@ namespace Aoc2019.Tests
             Cmd = new PwdKrackz0r(DataKey);
         }
 
-        public class Execute : PwdKrackz0rTests
+        public class ExecuteV1 : PwdKrackz0rTests
         {
             [Fact]
             public void Should_filter_options_less_than_100000()
@@ -19,7 +19,7 @@ namespace Aoc2019.Tests
 
                 Cmd.Execute(Data);
 
-                var matchingPasswordsInRange = (int[])Data[PwdKrackz0r.CandidatesKey];
+                var matchingPasswordsInRange = (int[])Data[PwdKrackz0r.CandidatesV1Key];
 
                 Assert.Equal(111111, matchingPasswordsInRange.Last());
             }
@@ -31,7 +31,7 @@ namespace Aoc2019.Tests
 
                 Cmd.Execute(Data);
 
-                var matchingPasswordsInRange = (int[])Data[PwdKrackz0r.CandidatesKey];
+                var matchingPasswordsInRange = (int[])Data[PwdKrackz0r.CandidatesV1Key];
 
                 Assert.Single(matchingPasswordsInRange);
                 Assert.Equal(999999, matchingPasswordsInRange[0]);
@@ -44,7 +44,7 @@ namespace Aoc2019.Tests
 
                 Cmd.Execute(Data);
 
-                var matchingPasswordsInRange = (int[]) Data[PwdKrackz0r.CandidatesKey];
+                var matchingPasswordsInRange = (int[]) Data[PwdKrackz0r.CandidatesV1Key];
 
                 Assert.Single(matchingPasswordsInRange);
                 Assert.Equal(111111,matchingPasswordsInRange[0]);
@@ -57,9 +57,32 @@ namespace Aoc2019.Tests
 
                 Cmd.Execute(Data);
 
-                var matchingPasswordsInRange = (int[])Data[PwdKrackz0r.CandidatesKey];
+                var matchingPasswordsInRange = (int[])Data[PwdKrackz0r.CandidatesV1Key];
                 Assert.Single(matchingPasswordsInRange);
                 Assert.Equal(123788, matchingPasswordsInRange[0]);
+            }
+        }
+
+        public class ExecuteV2 : PwdKrackz0rTests
+        {
+            [Theory]
+            [InlineData(112233,true)]
+            [InlineData(123444,false)]
+            [InlineData(111122,true)]
+            [InlineData(166678,false)]
+            [InlineData(166677,true)]
+            public void Should_filter_options_where_twin_is_part_of_larger_group(int input, bool allowed)
+            {
+                Data.Add(DataKey, new[] { input, input });
+
+                Cmd.Execute(Data);
+
+                var matchingPasswordsInRange = (int[])Data[PwdKrackz0r.CandidatesV2Key];
+
+                if(allowed)
+                    Assert.Contains(input, matchingPasswordsInRange);
+                else
+                    Assert.Empty(matchingPasswordsInRange);
             }
         }
     }

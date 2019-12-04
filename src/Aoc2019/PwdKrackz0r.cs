@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Aoc2019
 {
     public class PwdKrackz0r : Command
     {
-        public static string CandidatesKey = "PwdKrackz0r.Candidates";
+        public static string CandidatesV1Key = "PwdKrackz0r.Candidates.V1";
+        public static string CandidatesV2Key = "PwdKrackz0r.Candidates.V2";
         private readonly string _dataKey;
 
         public PwdKrackz0r(string dataKey)
@@ -17,7 +20,7 @@ namespace Aoc2019
             var inputRange = (int[]) data[_dataKey];
             var candidates = new List<int>();
 
-            for (int i = inputRange[0]; i < inputRange[1]+1; i++)
+            for (int i = inputRange[0]; i <= inputRange[1]; i++)
             {
                 candidates.Add(i);
             }
@@ -28,7 +31,8 @@ namespace Aoc2019
                 .FilterDecreasingPairs()
                 .FilterNoAdjacentTwins();
 
-            data.Add(CandidatesKey, candidates.ToArray());
+            data.Add(CandidatesV1Key, candidates.ToArray());
+            data.Add(CandidatesV2Key, candidates.FilterOddGroups().ToArray());
         }
     }
 
@@ -78,6 +82,31 @@ namespace Aoc2019
                     c--;
                     break;
                 }
+            }
+
+            return list;
+        }
+
+        public static List<int> FilterOddGroups(this List<int> list)
+        {
+            for (int c = 0; c < list.Count; c++)
+            {
+                var digitCount = new Dictionary<char, int>();
+
+                var str = list[c].ToString();
+
+                foreach (char digit in str)
+                {
+                    if(!digitCount.ContainsKey(digit))
+                        digitCount.Add(digit,0);
+                    digitCount[digit]++;
+                }
+
+                if(digitCount.Any(x=>x.Value == 2))
+                    continue;
+
+                list.RemoveAt(c);
+                c--;
             }
 
             return list;

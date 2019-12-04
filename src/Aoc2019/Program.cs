@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Aoc2019
 {
@@ -19,10 +18,17 @@ namespace Aoc2019
 
             var data = LoadData();
             var cmds = CreateCommands();
+            for (var i = 0; i < cmds.Count; i++)
+            {
+                Console.Write(".");
+            }
+            Console.WriteLine();
             foreach (var cmd in cmds)
             {
                 cmd.Execute(data);
+                Console.Write("|");
             }
+            Console.WriteLine();
 
             Console.WriteLine($"Module fuel sum: {(int)data[ModuleFuelCalculator.DataSumKey]}");
 
@@ -44,18 +50,16 @@ namespace Aoc2019
                               $"{(int)data[WireIntersectionFinder.ShortestRouteDistanceIntersectionKey]}");
             Console.WriteLine();
 
-            var passwordCandidates = (int[]) data[PwdKrackz0r.CandidatesKey];
-            var pwdCandidatesString = passwordCandidates
-                .Select(x => x.ToString())
-                .Aggregate((concat, str) => $"{concat}, {str}");
 
-            Console.WriteLine($"Password candidates count: {passwordCandidates.Length}");
-            Console.WriteLine($"Password candidates: {pwdCandidatesString}");
+            Console.WriteLine("Password v1 candidates count: " +
+                              $"{((int[]) data[PwdKrackz0r.CandidatesV1Key]).Length}");
+            Console.WriteLine("Password v2 candidates count: " +
+                              $"{((int[]) data[PwdKrackz0r.CandidatesV2Key]).Length}");
 
             Console.WriteLine("\n");
         }
 
-        private static IEnumerable<Command> CreateCommands()
+        private static List<Command> CreateCommands()
         {
             return new List<Command>
             {
