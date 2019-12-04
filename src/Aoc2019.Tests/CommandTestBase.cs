@@ -6,6 +6,7 @@ namespace Aoc2019.Tests
     {
         protected Dictionary<string, object> Data;
         protected Command Cmd;
+        protected static string DataKey = "key";
 
         protected CommandTestBase()
         {

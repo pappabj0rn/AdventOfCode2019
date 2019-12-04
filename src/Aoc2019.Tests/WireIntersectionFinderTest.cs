@@ -4,8 +4,6 @@ namespace Aoc2019.Tests
 {
     public abstract class WireIntersectionFinderTest : CommandTestBase
     {
-        private static string DataKey = "key";
-
         protected WireIntersectionFinderTest()
         {
             Cmd = new WireIntersectionFinder(DataKey);
