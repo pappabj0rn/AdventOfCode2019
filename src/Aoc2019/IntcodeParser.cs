@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Aoc2019.IntcodeComputer;
+using Aoc2019.IntcodeComputer.Instructions;
 
 namespace Aoc2019
 {
@@ -13,85 +15,18 @@ namespace Aoc2019
 
         public override void Execute(Dictionary<string, object> data)
         {
-            var opCodes = new Dictionary<int, Instruction>
+            var decoder = new InstructionDecoder(new Instruction[]
             {
-                {1, new Add()},
-                {2, new Mul()},
-                {99, new End()}
-            };
+                new Add(),
+                new Multiply(),
+                new Halt()
+            });
 
-            var state = new ProgramState
-            {
-                Memory = (int[]) data[_programKey]
-            };
+            var computer = new Computer(decoder);
 
-            while (!state.Done)
-            {
-                opCodes[state.Memory[state.ProgramCounter]]
-                    .Execute(state);
-            }
-        }
+            computer.State.Memory = (int[]) data[_programKey];
 
-        public class ProgramState
-        {
-            public bool Done { get; set; }
-            public int ProgramCounter { get; set; }
-            public int[] Memory { get; set; }
-        }
-
-        public abstract class Instruction
-        {
-            public virtual int Length { get; } = 0;
-
-            public void Execute(ProgramState state)
-            {
-                ExecuteInternal(state);
-                state.ProgramCounter += Length;
-            }
-
-            protected abstract void ExecuteInternal(ProgramState state);
-        }
-
-        private class End : Instruction
-        {
-            protected override void ExecuteInternal(ProgramState state)
-            {
-                state.Done = true;
-            }
-        }
-
-        private class Add : Instruction
-        {
-            public override int Length => 4;
-
-            protected override void ExecuteInternal(ProgramState state)
-            {
-                var i = state.ProgramCounter;
-                var p1Addr = state.Memory[i + 1];
-                var p2Addr = state.Memory[i + 2];
-                var storageAddr = state.Memory[i + 3];
-
-                state.Memory[storageAddr] = 
-                    state.Memory[p1Addr] 
-                    + state.Memory[p2Addr];
-            }
-        }
-
-        private class Mul : Instruction
-        {
-            public override int Length => 4;
-
-            protected override void ExecuteInternal(ProgramState state)
-            {
-                var i = state.ProgramCounter;
-                var p1Addr = state.Memory[i + 1];
-                var p2Addr = state.Memory[i + 2];
-                var storageAddr = state.Memory[i + 3];
-
-                state.Memory[storageAddr] =
-                    state.Memory[p1Addr]
-                    * state.Memory[p2Addr];
-            }
+            computer.Run();
         }
     }
 }

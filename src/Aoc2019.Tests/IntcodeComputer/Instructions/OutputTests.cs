@@ -1,0 +1,34 @@
+﻿using Aoc2019.IntcodeComputer;
+using Aoc2019.IntcodeComputer.Instructions;
+using Xunit;
+
+namespace Aoc2019.Tests.IntcodeComputer.Instructions
+{
+    public abstract class OutputTests : InstructionTestBase
+    {
+        protected OutputTests()
+        {
+            TestedInstruction = new Output();
+        }
+
+        public class Execute : OutputTests
+        {
+            [Theory]
+            [InlineData(new[] { 1, 0 })]
+            [InlineData(new[] { 0, 1 })]
+            [InlineData(new[] { 0, 2, 1 })]
+            public void Should_write_value_from_addr1_to_state_output(
+                int[] prg)
+            {
+                var state = new ComputerState
+                {
+                    Memory = (int[])prg.Clone()
+                };
+
+                TestedInstruction.Execute(state);
+
+                Assert.Equal(1, state.Output);
+            }
+        }
+    }
+}
