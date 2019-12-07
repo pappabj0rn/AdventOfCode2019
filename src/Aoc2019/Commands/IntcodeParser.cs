@@ -2,7 +2,7 @@
 using Aoc2019.IntcodeComputer;
 using Aoc2019.IntcodeComputer.Instructions;
 
-namespace Aoc2019
+namespace Aoc2019.Commands
 {
     public class IntcodeParser : Command
     {

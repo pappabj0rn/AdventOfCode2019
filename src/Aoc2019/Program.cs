@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aoc2019.Commands;
 
 namespace Aoc2019
 {
@@ -18,44 +19,38 @@ namespace Aoc2019
 
             var data = LoadData();
             var cmds = CreateCommands();
-            for (var i = 0; i < cmds.Count; i++)
-            {
-                Console.Write(".");
-            }
-            Console.WriteLine();
+            
             foreach (var cmd in cmds)
             {
                 cmd.Execute(data);
-                Console.Write("|");
             }
-            Console.WriteLine();
-
-            Console.WriteLine($"Module fuel sum: {(int)data[ModuleFuelCalculator.DataSumKey]}");
-
-            var reqFuelFuel = (int) data[ModuleFuelCalculator.DataSumKey]
-                              +(int) data[ModuleFuelFuelCalculator.DataSumKey];
-            Console.WriteLine($"Inluding req. fuel: {reqFuelFuel}");
-            Console.WriteLine();
-
-            Console.WriteLine($"1202 Program[0]: {((int[])data[Prg1202Key])[0]}");
-            var noun = (int) data[Prg1202NounVerbFinder.FoundNounKey];
-            var verb = (int) data[Prg1202NounVerbFinder.FoundVerbKey];
-            var result = 100 * noun + verb;
-            Console.WriteLine($"> nv({Day2_2_MagicNumber}): {result}");
-            Console.WriteLine();
-
-            Console.WriteLine("Manhattan distance from central port to closest intersection: " +
-                              $"{(int)data[WireIntersectionFinder.ClosesManhattanIntersectionKey]}");
-            Console.WriteLine("Shourtest route from central port to an intersection: " +
-                              $"{(int)data[WireIntersectionFinder.ShortestRouteDistanceIntersectionKey]}");
-            Console.WriteLine();
-
-
-            Console.WriteLine("Password v1 candidates count: " +
-                              $"{((int[]) data[PwdKrackz0r.CandidatesV1Key]).Length}");
-            Console.WriteLine("Password v2 candidates count: " +
-                              $"{((int[]) data[PwdKrackz0r.CandidatesV2Key]).Length}");
-
+            //todo menu system
+            //Console.WriteLine($"Module fuel sum: {(int)data[ModuleFuelCalculator.DataSumKey]}");
+            //
+            //var reqFuelFuel = (int) data[ModuleFuelCalculator.DataSumKey]
+            //                  +(int) data[ModuleFuelFuelCalculator.DataSumKey];
+            //Console.WriteLine($"Inluding req. fuel: {reqFuelFuel}");
+            //Console.WriteLine();
+            //
+            //Console.WriteLine($"1202 Program[0]: {((int[])data[Prg1202Key])[0]}");
+            //var noun = (int) data[Prg1202NounVerbFinder.FoundNounKey];
+            //var verb = (int) data[Prg1202NounVerbFinder.FoundVerbKey];
+            //var result = 100 * noun + verb;
+            //Console.WriteLine($"> nv({Day2_2_MagicNumber}): {result}");
+            //Console.WriteLine();
+            //
+            //Console.WriteLine("Manhattan distance from central port to closest intersection: " +
+            //                  $"{(int)data[WireIntersectionFinder.ClosesManhattanIntersectionKey]}");
+            //Console.WriteLine("Shourtest route from central port to an intersection: " +
+            //                  $"{(int)data[WireIntersectionFinder.ShortestRouteDistanceIntersectionKey]}");
+            //Console.WriteLine();
+            //
+            //
+            //Console.WriteLine("Password v1 candidates count: " +
+            //                  $"{((int[]) data[PwdKrackz0r.CandidatesV1Key]).Length}");
+            //Console.WriteLine("Password v2 candidates count: " +
+            //                  $"{((int[]) data[PwdKrackz0r.CandidatesV2Key]).Length}");
+            //
             Console.WriteLine("\n");
         }
 
@@ -63,12 +58,13 @@ namespace Aoc2019
         {
             return new List<Command>
             {
-                new ModuleFuelCalculator(ModuleWeightKey),
-                new ModuleFuelFuelCalculator(),
-                new Prg1202NounVerbFinder(Prg1202Key,Day2_2_MagicNumber,new IntcodeParser(Prg1202NounVerbFinder.ProgramKey)),
-                new IntcodeParser(Prg1202Key),
-                new WireIntersectionFinder(CrossedWireDataKey),
-                new PwdKrackz0r(PasswordDataKey)
+                //new ModuleFuelCalculator(ModuleWeightKey),
+                //new ModuleFuelFuelCalculator(),
+                //new Prg1202NounVerbFinder(Prg1202Key,Day2_2_MagicNumber,new IntcodeParser(Prg1202NounVerbFinder.ProgramKey)),
+                //new IntcodeParser(Prg1202Key),
+                //new WireIntersectionFinder(CrossedWireDataKey),
+                //new PwdKrackz0r(PasswordDataKey)
+                new Day5_1()
             };
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Aoc2019.Commands;
 using Xunit;
 
 namespace Aoc2019.Tests

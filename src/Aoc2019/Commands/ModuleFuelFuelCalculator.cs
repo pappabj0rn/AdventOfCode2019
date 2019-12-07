@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Aoc2019
+namespace Aoc2019.Commands
 {
     public class ModuleFuelFuelCalculator : Command
     {

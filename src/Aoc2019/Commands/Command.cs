@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Aoc2019
+namespace Aoc2019.Commands
 {
     public abstract class Command
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aoc2019.Commands;
 using Xunit;
 
 namespace Aoc2019.Tests

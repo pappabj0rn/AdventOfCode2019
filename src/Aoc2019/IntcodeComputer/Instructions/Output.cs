@@ -7,7 +7,7 @@
 
         protected override void ExecuteInternal(ComputerState state)
         {
-            state.Output = GetParameterValue(1, state);
+            state.Output.Add(GetParameterValue(1, state));
         }
     }
 }

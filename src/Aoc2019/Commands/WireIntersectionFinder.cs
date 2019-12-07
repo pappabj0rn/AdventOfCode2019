@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Aoc2019
+namespace Aoc2019.Commands
 {
     public class WireIntersectionFinder : Command
     {

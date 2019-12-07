@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Aoc2019.Commands;
 
 namespace Aoc2019.Tests
 {
