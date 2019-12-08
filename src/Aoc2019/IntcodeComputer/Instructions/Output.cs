@@ -5,9 +5,9 @@
         public override int OpCode => 4;
         public override int ParameterCount => 1;
 
-        protected override void ExecuteInternal(ComputerState state)
+        protected override void ExecuteInternal()
         {
-            state.Output.Add(GetParameterValue(1, state));
+            State.Output.Add(GetParameterValue(1));
         }
     }
 }

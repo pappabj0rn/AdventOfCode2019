@@ -5,13 +5,13 @@
         public override int OpCode => 6;
         public override int ParameterCount => 2;
 
-        protected override void ExecuteInternal(ComputerState state)
+        protected override void ExecuteInternal()
         {
-            var jump = GetParameterValue(1, state) == 0;
+            var jump = GetParameterValue(1) == 0;
 
             if (!jump) return;
 
-            state.ProgramCounter = GetParameterValue(2, state) - Length;
+            Jump(GetParameterValue(2));
         }
     }
 }

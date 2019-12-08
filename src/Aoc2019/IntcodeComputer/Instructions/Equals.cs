@@ -5,10 +5,10 @@
         public override int OpCode => 8;
         public override int ParameterCount => 3;
 
-        protected override void ExecuteInternal(ComputerState state)
+        protected override void ExecuteInternal()
         {
-            var eq = GetParameterValue(1, state) == GetParameterValue(2, state);
-            Write(eq ? 1 : 0, state, 3);
+            var eq = GetParameterValue(1) == GetParameterValue(2);
+            Write(eq ? 1 : 0, State, 3);
         }
     }
 }

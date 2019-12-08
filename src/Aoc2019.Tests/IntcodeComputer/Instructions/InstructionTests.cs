@@ -56,7 +56,7 @@ namespace Aoc2019.Tests.IntcodeComputer.Instructions
                 {
                     ExecuteInternalAction = (self, givenState) =>
                     {
-                        _actual = self.PublicGetParameterValue(givenState.Memory[0], givenState);
+                        _actual = self.PublicGetParameterValue(givenState.Memory[0]);
                     }
                 };
             }
@@ -112,14 +112,14 @@ namespace Aoc2019.Tests.IntcodeComputer.Instructions
 
             public Action<TestInstruction, ComputerState> ExecuteInternalAction { get; set; }
 
-            protected override void ExecuteInternal(ComputerState state)
+            protected override void ExecuteInternal()
             {
-                ExecuteInternalAction?.Invoke(this, state);
+                ExecuteInternalAction?.Invoke(this, State);
             }
 
-            public int PublicGetParameterValue(int parameter, ComputerState state)
+            public int PublicGetParameterValue(int parameter)
             {
-                return GetParameterValue(parameter, state);
+                return GetParameterValue(parameter);
             }
         }
     }
