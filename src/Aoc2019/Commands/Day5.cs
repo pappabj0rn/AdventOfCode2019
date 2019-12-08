@@ -5,7 +5,7 @@ using Aoc2019.IntcodeComputer.Instructions;
 
 namespace Aoc2019.Commands
 {
-    public class Day5_1 : Command
+    public class Day5 : Command
     {
         public static string OutputKey = "day5_1_output";
 
@@ -58,12 +58,38 @@ namespace Aoc2019.Commands
 
             var computer = new Computer(decoder);
 
-            computer.State.Memory = prg;
+            computer.State.Memory = (int[])prg.Clone();
             computer.State.Input = 1;
 
             computer.Run();
 
             Console.WriteLine("Day 5.1, output:");
+            foreach (int output in computer.State.Output)
+            {
+                Console.WriteLine($"> {output}");
+            }
+
+            decoder = new InstructionDecoder(new Instruction[]
+            {
+                new Add(),
+                new Multiply(),
+                new Input(),
+                new Output(),
+                new JumpIfTrue(),
+                new JumpIfFalse(),
+                new LessThan(),
+                new Equals(),
+                new Halt()
+            });
+
+            computer = new Computer(decoder);
+
+            computer.State.Memory = (int[])prg.Clone();
+            computer.State.Input = 5;
+
+            computer.Run();
+
+            Console.WriteLine("Day 5.2, output:");
             foreach (int output in computer.State.Output)
             {
                 Console.WriteLine($"> {output}");

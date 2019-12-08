@@ -64,7 +64,7 @@ namespace Aoc2019
                 //new IntcodeParser(Prg1202Key),
                 //new WireIntersectionFinder(CrossedWireDataKey),
                 //new PwdKrackz0r(PasswordDataKey)
-                new Day5_1()
+                new Day5()
             };
         }
 
