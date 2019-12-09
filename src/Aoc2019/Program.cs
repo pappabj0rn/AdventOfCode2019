@@ -1630,6 +1630,7 @@ namespace Aoc2019
             };
             task.Run();
             Console.WriteLine($"Day 6.1: {task.Result[Day6.CountKey]}");
+            Console.WriteLine($"Day 6.2: {task.Result[Day6.JumpCountKey]}");
 
             //var data = LoadData();
             //var cmds = CreateCommands();

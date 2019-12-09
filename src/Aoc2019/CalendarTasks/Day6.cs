@@ -7,6 +7,7 @@ namespace Aoc2019.CalendarTasks
     public class Day6 : CalendarTask
     {
         public static string CountKey = "day6.count";
+        public static string JumpCountKey = "day6.jumpCount";
         
         public override void Run()
         {
@@ -19,8 +20,11 @@ namespace Aoc2019.CalendarTasks
                 for (int i = 0; i < map.Count; i++)
                 {
                     if (!map[i].StartsWith(node.Name)) continue;
-                    var parts = map[i].Split(')');
-                    node.Nodes.Add(new Node(parts[1], parts[0]));
+                    
+                    node.Nodes.Add(
+                        new Node(
+                            map[i].Split(')')[1], 
+                            node));
                     map.RemoveAt(i);
                     i--;
                 }
@@ -31,22 +35,68 @@ namespace Aoc2019.CalendarTasks
                 }
             }
 
+            int CountOrbitTransfers(string start, string target)
+            {
+                var transfers = 0;
+
+                var n1 = root.FindNode(start);
+                if (n1 is null)
+                    return -1;
+
+
+                var parent = n1.Parent;
+                while (true)
+                {
+                    var relation = parent.HasNode(target);
+                    if (relation == Relation.No)
+                    {
+                        transfers++;
+                        parent = parent.Parent;
+                        continue;
+                    }
+
+                    if (relation == Relation.Direct)
+                    {
+                        break;
+                    }
+
+                    foreach (var child in parent.Nodes)
+                    {
+                        var childRelation = child.HasNode(target);
+                        switch (childRelation)
+                        {
+                            case Relation.No:
+                                continue;
+                            case Relation.Direct:
+                                return ++transfers;
+                            default:
+                                transfers++;
+                                parent = child;
+                                break;
+                        }
+                    }
+                }
+                
+                return transfers;
+            }
+
             FindChildren(root);
 
             Result.Add(CountKey, root.Count);
+            Result.Add(JumpCountKey, CountOrbitTransfers("YOU","SAN"));
         }
 
-        [DebuggerDisplay("{Orbits}){Name}")]
+        [DebuggerDisplay("{Parent.Name}){Name}")]
         internal class Node
         {
             public string Name { get; private set; }
-            public string Orbits { get; private set; }
             public List<Node> Nodes { get; private set; }
+            public Node Parent { get; set; }
 
-            public Node(string name, string orbits)
+            public Node(string name, Node parent)
             {
                 Name = name;
-                Orbits = orbits;
+                Parent = parent;
                 Nodes = new List<Node>();
             }
 
@@ -56,13 +106,48 @@ namespace Aoc2019.CalendarTasks
                 {
                     var childSum = Nodes.Sum(x => x.Count);
 
-                    if (Orbits is null) return childSum;
+                    if (Parent is null) return childSum;
 
-                    return 1+ ChildCount +childSum;
+                    return 1 + ChildCount + childSum;
                 }
             }
 
             public int ChildCount => Nodes.Count + Nodes.Sum(x => x.ChildCount);
+
+            public Node FindNode(string name)
+            {
+                foreach (var child in Nodes)
+                {
+                    if (child.Name == name)
+                        return child;
+
+                    if (child.HasNode(name) != Relation.No)
+                        return child.FindNode(name);
+                }
+
+                return null;
+            }
+
+            public Relation HasNode(string name)
+            {
+                foreach (var child in Nodes)
+                {
+                    if (child.Name == name)
+                        return Relation.Direct;
+
+                    if (child.HasNode(name) != Relation.No)
+                        return Relation.Decendant;
+                }
+
+                return Relation.No;
+            }
+        }
+
+        internal enum Relation
+        {
+            No,
+            Direct,
+            Decendant
         }
     }
 }
