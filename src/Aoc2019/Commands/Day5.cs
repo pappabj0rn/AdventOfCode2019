@@ -7,8 +7,6 @@ namespace Aoc2019.Commands
 {
     public class Day5 : Command
     {
-        public static string OutputKey = "day5_1_output";
-
         public override void Execute(Dictionary<string, object> data)
         {
             var prg = new[]
