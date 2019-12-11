@@ -8,7 +8,7 @@
 
     public class Computer : IComputer
     {
-        public ComputerState State { get; }
+        public ComputerState State { get; set; }
 
         private readonly IInstructionDecoder _instructionDecoder;
 

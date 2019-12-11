@@ -57,7 +57,7 @@ namespace Aoc2019.Commands
             var computer = new Computer(decoder);
 
             computer.State.Memory = (int[])prg.Clone();
-            computer.State.Input = 1;
+            computer.State.Inputs = new []{1};
 
             computer.Run();
 
@@ -83,7 +83,7 @@ namespace Aoc2019.Commands
             computer = new Computer(decoder);
 
             computer.State.Memory = (int[])prg.Clone();
-            computer.State.Input = 5;
+            computer.State.Inputs = new []{5};
 
             computer.Run();
 

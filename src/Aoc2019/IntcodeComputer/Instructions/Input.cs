@@ -1,4 +1,6 @@
-﻿namespace Aoc2019.IntcodeComputer.Instructions
+﻿using System.Collections.Generic;
+
+namespace Aoc2019.IntcodeComputer.Instructions
 {
     public class Input : Instruction
     {

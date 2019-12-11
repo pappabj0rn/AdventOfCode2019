@@ -1,6 +1,5 @@
 ﻿using Aoc2019.IntcodeComputer;
 using Aoc2019.IntcodeComputer.Instructions;
-using Newtonsoft.Json.Serialization;
 using Xunit;
 
 namespace Aoc2019.Tests.IntcodeComputer.Instructions

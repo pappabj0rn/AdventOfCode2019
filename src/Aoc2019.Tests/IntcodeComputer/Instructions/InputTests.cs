@@ -23,12 +23,30 @@ namespace Aoc2019.Tests.IntcodeComputer.Instructions
                 var state = new ComputerState
                 {
                     Memory = (int[])prg.Clone(),
-                    Input = 9
+                    Inputs = new[] {9}
                 };
 
                 TestedInstruction.Execute(state);
 
-                Assert.Equal(state.Input, state.Memory[prg[1]]);
+                Assert.Equal(state.Inputs[0], state.Memory[prg[1]]);
+            }
+
+            [Fact]
+            public void Should_use_inputs_in_sequence()
+            {
+                var input = new[] {9, 5};
+                var state = new ComputerState
+                {
+                    Memory = new[]{0,0,0,2},
+                    Inputs = (int[])input.Clone()
+                };
+
+                TestedInstruction.Execute(state);
+                TestedInstruction.Execute(state);
+
+                Assert.Equal(input, state.Inputs);
+                Assert.Equal(9, state.Memory[0]);
+                Assert.Equal(5, state.Memory[2]);
             }
         }
     }

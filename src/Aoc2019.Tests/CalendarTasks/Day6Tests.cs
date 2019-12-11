@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Aoc2019.CalendarTasks;
-using Aoc2019.Commands;
 using Xunit;
 
 namespace Aoc2019.Tests.CalendarTasks
 {
     public abstract class Day6Tests
     {
-        public class Execute : Day6Tests
+        public class Run : Day6Tests
         {
             [Theory]
             [InlineData(new[]{"COM)B", "B)C" }, 3)]
