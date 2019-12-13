@@ -44,6 +44,31 @@ namespace Aoc2019.Tests.IntcodeComputer.Instructions
 
                 Assert.Equal(1,state.ProgramCounter);
             }
+
+            [Fact]
+            public void Should_advance_program_counter_if_instruction_jumped_in_previous_execution()
+            {
+                TestedInstruction = new TestInstruction(1)
+                {
+                    ExecuteInternalAction = (self, givenState) =>
+                    {
+                        var jmp = self.PublicGetParameterValue(1);
+                        if (jmp > 0)
+                            self.PublicJump(jmp);
+                    },
+                    ParameterModes = 1
+                };
+
+                var state = new ComputerState
+                {
+                    Memory = new[] { 0, 2, 1, 0 }
+                };
+
+                TestedInstruction.Execute(state);
+                TestedInstruction.Execute(state);
+
+                Assert.Equal(4, state.ProgramCounter);
+            }
         }
 
         public class GetParameterValue : InstructionTests
@@ -120,6 +145,11 @@ namespace Aoc2019.Tests.IntcodeComputer.Instructions
             public int PublicGetParameterValue(int parameter)
             {
                 return GetParameterValue(parameter);
+            }
+
+            public void PublicJump(int addr)
+            {
+                Jump(addr);
             }
         }
     }

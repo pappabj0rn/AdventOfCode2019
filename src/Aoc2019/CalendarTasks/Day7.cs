@@ -14,7 +14,7 @@ namespace Aoc2019.CalendarTasks
         {
             var data = (DataModel) Data;
 
-            var cb = new IntcodeComputer.ComputerBuilder();
+            var cb = new ComputerBuilder();
 
             var amps = new List<Computer>();
 
@@ -23,11 +23,10 @@ namespace Aoc2019.CalendarTasks
                 amps.Add(cb.Build());
             }
 
-            var phaseSettings = new[] {0, 1, 2, 3, 4};
-            var phasePermutations = phaseSettings.Permutations();
+            var phasePermutations = data.PhaseSettings.Permutations();
 
             var maxThrusterSignal = 0;
-            var withPS = new int[] {0};
+            var withPS = new[] {0};
             foreach (var phaseSetting in phasePermutations)
             {
                 foreach (var amp in amps)
@@ -38,20 +37,33 @@ namespace Aoc2019.CalendarTasks
                     };
                 }
 
+                var prevI = new[] {4, 0, 1, 2, 3};
                 var ps = phaseSetting.ToArray();
-                for (int i = 0; i < ps.Length; i++)
+                var iteration = 0;
+                while(iteration > -1)
                 {
-                    var prevOut = 0;
-                    if (i > 0)
+                    for (int i = 0; i < ps.Length; i++)
                     {
-                        prevOut = amps[i - 1].State.Output[0];
+                        if(iteration == 0)
+                            amps[i].State.Inputs.Add(ps[i]);
+
+                        amps[i].State.Inputs.Add(amps[prevI[i]].State.Output.LastOrDefault());
+                        amps[i].State.Halt = false;
+                        amps[i].Run();
                     }
 
-                    amps[i].State.Inputs = new[] {ps[i], prevOut};
-                    amps[i].Run();
+                    if (data.FeedbackMode
+                        && amps.Last().State.AwaitingInput)
+                    {
+                        iteration++;
+                    }
+                    else
+                    {
+                        iteration = -1;
+                    }
                 }
 
-                var signal = amps[4].State.Output[0];
+                var signal = amps[4].State.Output.Last();
                 if (signal > maxThrusterSignal)
                 {
                     maxThrusterSignal = signal;

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Aoc2019.IntcodeComputer.Instructions
 {
@@ -9,7 +9,19 @@ namespace Aoc2019.IntcodeComputer.Instructions
 
         protected override void ExecuteInternal()
         {
-            Write(State.Input,State,1);
+            try
+            {
+                State.AwaitingInput = false;
+                State.NextInput();
+                Write(State.Input, State, 1);
+            }
+            catch (Exception)
+            {
+                State.Halt = true;
+                State.AwaitingInput = true;
+                State.PrevInput();
+                Jump(State.ProgramCounter);
+            }
         }
     }
 }

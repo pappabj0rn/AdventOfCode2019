@@ -19,14 +19,33 @@ namespace Aoc2019
         {
             Console.WriteLine("Advent of Code 2019 console app.");
 
+            var prg = new CsvReader<int>(
+                    new TextFileReader("Data/Day7.txt"))
+                .Read();
+
             var task = new Day7
             {
-                Data = new CsvReader<int>(
-                    new TextFileReader("Data/Day7.txt"))
-                    .Read()
+                Data = new Day7.DataModel
+                {
+                    FeedbackMode = true,
+                    PhaseSettings = new[] { 0, 1, 2, 3, 4 },
+                    Program = prg
+                }
             };
             task.Run();
             Console.WriteLine($"Day 7.1: {task.Result[Day7.ThrusterSignalKey]}");
+
+            task = new Day7
+            {
+                Data = new Day7.DataModel
+                {
+                    FeedbackMode = true,
+                    PhaseSettings = new[] { 5, 6, 7, 8, 9 },
+                    Program = prg
+                }
+            };
+            task.Run();
+            Console.WriteLine($"Day 7.2: {task.Result[Day7.ThrusterSignalKey]}");
 
             //var data = LoadData();
             //var cmds = CreateCommands();

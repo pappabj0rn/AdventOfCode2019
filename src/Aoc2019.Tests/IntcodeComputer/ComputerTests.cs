@@ -34,7 +34,7 @@ namespace Aoc2019.Tests.IntcodeComputer
                     .CompletesIn(1, () => Computer.Run())
                     .Wait();
 
-                Assert.True(Computer.State.Halt);
+                Assert.True(Computer.State.Halt, "Not halted.");
             }
 
             [Fact]
@@ -52,7 +52,7 @@ namespace Aoc2019.Tests.IntcodeComputer
 
                 Computer.Run();
 
-                Assert.True(Computer.State.Halt);
+                Assert.True(Computer.State.Halt, "Not halted.");
             }
 
             //todo halt on instruction exception

@@ -12,6 +12,8 @@
 
         public void Execute(ComputerState state)
         {
+            _jumped = false;
+
             State = state;
 
             ExecuteInternal();

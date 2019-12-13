@@ -69,7 +69,7 @@ namespace Aoc2019.Tests.CalendarTasks
             {
                 var d7 = new Day7 { Data = new Day7.DataModel { 
                     Program = prg,
-                    PhaseSettings = new[] { 0, 1, 2, 3, 4 },
+                    PhaseSettings = new[] { 5, 6, 7, 8, 9 },
                     FeedbackMode = true
                 } };
 
